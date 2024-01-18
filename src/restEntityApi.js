@@ -1,7 +1,7 @@
 import { apiRequest as request, toQueryString } from './request';
 
 const RestEntityAPI = (options) => {
-  const { endpoint, selection } = options;
+  const { endpoint, selection, headers } = options;
 
   const buildEndpoint = (endpoint, params) =>
     (Array.isArray(params) ? endpoint(...params) : endpoint(params));
@@ -11,6 +11,7 @@ const RestEntityAPI = (options) => {
       method: 'POST',
       body: data,
       cancelToken,
+      headers,
       ...selection,
     });
 
@@ -18,12 +19,14 @@ const RestEntityAPI = (options) => {
     request(`${buildEndpoint(endpoint, params)}/${id}`, {
       method: 'PUT',
       body: data,
+      headers,
       ...selection,
     });
 
   const destroy = async (id = '', params) =>
     request(`${buildEndpoint(endpoint, params)}/${id}`, {
       method: 'DELETE',
+      headers,
       ...selection,
     });
 
@@ -37,6 +40,7 @@ const RestEntityAPI = (options) => {
     request(`${buildEndpoint(endpoint, params)}${toQueryString(query)}`, {
       method: 'GET',
       cancelToken,
+      headers,
       ...selection,
     });
 

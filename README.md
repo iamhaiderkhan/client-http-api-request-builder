@@ -33,7 +33,11 @@ import ApiBuilder from 'client-http-api-request-builder'
 
 const UsersAPI = ApiBuilder({
     name:'users',
-    endpoint: () => 'https://your.baseUrl/users'
+    endpoint: () => 'https://your.baseUrl/users',
+    // if you want and some custom headers
+    headers: {
+        'Authorization': `Bearer ${token}`
+    },
 })
 ```
 Now `UserAPI` have http request methods for create, update, destroy, getById and list for this endpoint `'https://your.baseUrl/users'`.

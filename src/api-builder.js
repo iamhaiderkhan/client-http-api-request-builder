@@ -26,9 +26,9 @@ const API_METHODS = {
  * @param {Object} options.entities
  */
 const ApiBuilder = (options) => {
-  // Destructure the options object to get entities, endpoints, name, and endpoint
+  // Destructure the options object to get entities, endpoints, name, endpoint and headers
   const {
-    entities, endpoints, name, endpoint,
+    entities, endpoints, name, endpoint, headers,
   } = options;
   // Define a function to get API endpoints
   const getApiEndpoints = (endpoints) => {
@@ -38,13 +38,13 @@ const ApiBuilder = (options) => {
     let apiEntities = {};
 
     // Define a function to get methods
-    const getMethods = (properties, isEntity) =>
+    const getMethods = (properties, isEntity, headerOptions) =>
     // Use Object.keys and reduce to iterate over each property
       Object.keys(properties).reduce((methods, methodName) => {
         // Destructure the property to get endpoint, type, and selection
         const { endpoint, type, selection } = properties[methodName];
         // Create a new RestEntityAPI instance
-        const api = RestEntityAPI({ methodName, endpoint, selection });
+        const api = RestEntityAPI({ methodName, endpoint, selection, headers: headerOptions });
         // If isEntity is true, add the entire api instance to methods, otherwise add the specific API method
         methods[methodName] = isEntity ? api : api[API_METHODS[type]];
         // Return the updated methods object
@@ -54,7 +54,7 @@ const ApiBuilder = (options) => {
     // If the name and endpoint are provided in the options
     if (name && endpoint) {
       // Create a new RestEntityAPI instance for the entire entity
-      apiEntities = RestEntityAPI({ name, endpoint });
+      apiEntities = RestEntityAPI({ name, endpoint, headers });
     }
     // If entities are provided and there are entities
     else if (entities && Object.keys(entities).length) {
