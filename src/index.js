@@ -1,2 +1,4 @@
-export * as ApiBuilder from './api-builder';
-export { METHOD_TYPES, request } from './api-builder';
+// Desc: Entry point for the module
+module.exports = {
+    ApiBuilder: require('./api-builder')
+}
