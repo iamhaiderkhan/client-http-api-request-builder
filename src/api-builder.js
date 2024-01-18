@@ -2,7 +2,7 @@
 
 import merge from 'lodash/merge';
 import RestEntityAPI from './restEntityApi';
-import request from './request'
+import request  from './request'
 const METHOD_TYPES = {
   POST: 'POST',
   PUT: 'PUT',

@@ -1,11 +1,12 @@
 {
   "name": "client-http-api-request-builder",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A client for manage api request for frontend applications",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src -d build",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -32,5 +33,9 @@
   "dependencies": {
     "axios": "^1.6.5",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
   }
 }
