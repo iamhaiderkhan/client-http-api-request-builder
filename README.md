@@ -161,3 +161,11 @@ const data = new FormData();
 data.append('image', image);
 await API.uploadPhoto(data); // https://your.baseUrl/api/photo
 ```
+
+## Author
+* **[Haider Khan](https://www.iamhaiderkhan.com)** - *Full Stack Javascript Developer*
+  - [Linkedin](https://www.linkedin.com/in/iamhaiderkhan)
+  - [Github](https://github.com/iamhaiderkhan)
+
+## Contributors
+ Welcome contributing, Please use GitHub's Issues/PRs.
