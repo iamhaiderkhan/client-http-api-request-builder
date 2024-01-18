@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "esbuild ./src/index --bundle --outfile=index.js",
+    "build": "esbuild ./src/index.js --bundle --outfile=index.js",
     "prepublishOnly": "npm run build"
 
   },
