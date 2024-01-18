@@ -1,4 +1,4 @@
-import  {apiRequest as request, toQueryString } from './request';
+import { apiRequest as request, toQueryString } from './request';
 
 const RestEntityAPI = (options) => {
   const { endpoint, selection } = options;
@@ -40,7 +40,6 @@ const RestEntityAPI = (options) => {
       ...selection,
     });
 
-
   return {
     create,
     update,
@@ -51,7 +50,5 @@ const RestEntityAPI = (options) => {
     toQueryString,
   };
 };
-
-
 
 export default RestEntityAPI;

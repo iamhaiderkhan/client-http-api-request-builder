@@ -56,15 +56,15 @@ export const toQueryString = (params) =>
  * @return {Object} headers
  */
 async function getRequestHeaders(options = {}) {
-    // Define default headers
-    const headers = {
-      'Content-Type': 'application/json',
-      // Spread operator is used to include any additional headers passed in options
-      ...options.headers,
-    };
+  // Define default headers
+  const headers = {
+    'Content-Type': 'application/json',
+    // Spread operator is used to include any additional headers passed in options
+    ...options.headers,
+  };
     // Return the headers object
-    return headers;
-  }
+  return headers;
+}
 
 /**
  * Make a request and throw an error if response code is not in successful range.
@@ -98,7 +98,8 @@ async function makeRequest(url, options = {}) {
     }
     const parseResponse = await response.json();
     response = { data: parseResponse };
-  } else {
+  }
+  else {
     response = await axios(requestOptions);
   }
 
@@ -131,7 +132,8 @@ export async function apiRequest(url, options = {}) {
     }
 
     return response.data;
-  } catch (error) {
+  }
+  catch (error) {
     const response = error.response || error || {};
     const getEndpoint = (url) =>
       url.substring(

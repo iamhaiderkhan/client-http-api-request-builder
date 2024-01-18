@@ -1,13 +1,12 @@
 {
   "name": "client-http-api-request-builder",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "A client for manage api request for frontend applications",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "esbuild ./src/index.js --bundle --outfile=index.js",
-    "prepublishOnly": "npm run build"
-
+    "lint": "eslint . --fix",
+    "prepublishOnly": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -40,6 +39,9 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.8",
-    "esbuild": "0.19.11"
+    "esbuild": "0.19.11",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "prettier": "^3.2.4"
   }
 }
