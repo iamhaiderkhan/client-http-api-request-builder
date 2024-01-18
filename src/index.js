@@ -1,4 +1,3 @@
-// Desc: Entry point for the module
-module.exports = {
-    ApiBuilder: require('./api-builder')
-}
+export { default as ApiBuilder } from './api-builder';
+export { METHOD_TYPES } from './api-builder';
+export { apiRequest as request, toQueryString} from './request';

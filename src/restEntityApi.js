@@ -1,4 +1,4 @@
-import request, { toQueryString } from './request';
+import  {apiRequest as request, toQueryString } from './request';
 
 const RestEntityAPI = (options) => {
   const { endpoint, selection } = options;

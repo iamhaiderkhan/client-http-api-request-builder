@@ -121,7 +121,7 @@ async function makeRequest(url, options = {}) {
  * @param {Object} options.headers  The headers to send with the request.
  * @param {Object} options.body     The body to send with the request.
  */
-export default async function apiRequest(url, options = {}) {
+export async function apiRequest(url, options = {}) {
   try {
     // Make request with current tokens.
     const response = await makeRequest(url, options);

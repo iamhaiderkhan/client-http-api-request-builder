@@ -2,7 +2,6 @@
 
 import merge from 'lodash/merge';
 import RestEntityAPI from './restEntityApi';
-import request  from './request'
 const METHOD_TYPES = {
   POST: 'POST',
   PUT: 'PUT',
@@ -73,5 +72,5 @@ const ApiBuilder = (options) => {
   return { ...getApiEndpoints(endpoints) };
 };
 
-export { METHOD_TYPES, request };
+export { METHOD_TYPES };
 export default ApiBuilder;
