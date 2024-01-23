@@ -34,20 +34,20 @@ import ApiBuilder from 'client-http-api-request-builder'
 const UsersAPI = ApiBuilder({
     name:'users',
     endpoint: () => 'https://your.baseUrl/users',
-    // if you want and some custom headers
+    // if you want add some custom headers
     headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
     },
 })
 ```
 Now `UserAPI` have http request methods for create, update, destroy, getById and list for this endpoint `'https://your.baseUrl/users'`.
 
 ```javascript
-await UsersAPI.create({...payload});
-await UsersAPI.update('id',{...updatedPayload});
-await UsersAPI.destroy('id');
-await UsersAPI.getById('id',{},{...query});
-await UsersAPI.list({...query});
+await UsersAPI.create({...payload}); //https://your.baseUrl/users
+await UsersAPI.update(id,{...updatedPayload}); https://your.baseUrl/users/id
+await UsersAPI.destroy(id);  //https://your.baseUrl/users/id
+await UsersAPI.getById(id,{},{...query}); //https://your.baseUrl/users/id
+await UsersAPI.list({...query}); //https://your.baseUrl/users
 ```
 
 ## Generate Mutiple Entities in a single run
@@ -66,7 +66,11 @@ const API = ApiBuilder({
             name:'books',
             endpoint: () => 'https://your.baseUrl/books'
         }
-    }
+    },
+    // if you want add some custom headers
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    },
 })
 ```
 Now `API` have `API.users`, `API.books` and both have http request methods for create, update, destroy, getById and list respect to their endpoint `'https://your.baseUrl/users'`, `'https://your.baseUrl/books'`.
@@ -74,16 +78,16 @@ Now `API` have `API.users`, `API.books` and both have http request methods for c
 ```javascript
 // for user
 await API.users.create({...payload});
-await API.users.update('id',{...updatedPayload});
-await API.users.destroy('id');
-await API.users.getById('id',{},{...query});
+await API.users.update(id,{...updatedPayload});
+await API.users.destroy(id);
+await API.users.getById(id,{},{...query});
 await API.users.list({...query});
 
 // for books
 await API.books.create({...payload});
-await API.books.update('id',{...updatedPayload});
-await API.books.destroy('id');
-await API.books.getById('id',{},{...query});
+await API.books.update(id,{...updatedPayload});
+await API.books.destroy(id);
+await API.books.getById(id,{},{...query});
 await API.books.list({...query});
 ```
 
@@ -103,7 +107,11 @@ const API = ApiBuilder({
             type: METHOD_TYPES.GET,
             endpoint: (bookId) => 'https://your.baseUrl/book/${bookId}/users'
         }
-    }
+    },
+    // if you want add some custom headers
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    },
 })
 ```
 Now `API` have `API.getUsers` and `API.getSingleBookByUserId` functions.
@@ -111,7 +119,7 @@ Now `API` have `API.getUsers` and `API.getSingleBookByUserId` functions.
 ```javascript
 await API.getUsers({page:4}); // https://your.baseUrl/users-list?page=4
 
-await API.getSingleBookByUserId('userId',['bookId'],{author='haider'});
+await API.getSingleBookByUserId(userId,[bookId],{author='haider'});
 //'https://your.baseUrl/book/bookId/users/userId?author=haider'
 ```
 
@@ -125,7 +133,11 @@ const API = ApiBuilder({
             type: METHOD_TYPES.LIST,
             endpoint: () => 'https://your.baseUrl/users-list'
         }
-    }
+    },
+    // if you want add some custom headers
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    },
 });
 
 const getSingleBookByUserId = (userId, BookId) => request(
@@ -133,6 +145,7 @@ const getSingleBookByUserId = (userId, BookId) => request(
      method: 'GET',
      headers:{
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
      }
     },
 );
@@ -158,7 +171,7 @@ Now `API` have `API.getUsers` and `API.getSingleBookByUserId` functions.
 ```javascript
 await API.getUsers({page:4}); // https://your.baseUrl/users-list?page=4
 
-await API.getSingleBookByUserId('userId','bookId');
+await API.getSingleBookByUserId(userId,bookId);
 //'https://your.baseUrl/book/bookId/users/userId'
 
 const data = new FormData();
