@@ -59,12 +59,12 @@ const ApiBuilder = (options) => {
     // If entities are provided and there are entities
     else if (entities && Object.keys(entities).length) {
       // Call getMethods function to get the methods for each entity
-      apiEntities = getMethods(entities, true);
+      apiEntities = getMethods(entities, true, headers);
     }
     // If endpoints are provided and there are endpoints
     else if (endpoints && Object.keys(endpoints).length) {
       // Call getMethods function to get the methods for each endpoint
-      apiEndpoints = getMethods(endpoints);
+      apiEndpoints = getMethods(endpoints, false, headers);
     }
     // Return an object with apiEntities and apiEndpoints
     return merge({}, { ...apiEndpoints }, { ...apiEntities });
