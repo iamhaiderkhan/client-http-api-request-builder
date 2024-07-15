@@ -1,6 +1,13 @@
 import { apiRequest as request, toQueryString } from './request';
+import { AxiosRequestHeaders, RawAxiosRequestHeaders } from 'axios';
+type RestEntityAPIOptions = {
+  name: string;
+  endpoint: Function;
+  selection?: Object;
+  headers: AxiosRequestHeaders | RawAxiosRequestHeaders;
+}
 
-const RestEntityAPI = (options) => {
+const RestEntityAPI = (options:RestEntityAPIOptions) => {
   const { endpoint, selection, headers } = options;
 
   const buildEndpoint = (endpoint, params) =>
