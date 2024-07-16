@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { Method, AxiosRequestHeaders, AxiosResponse, RawAxiosRequestHeaders} from 'axios';
 
 import isArray from 'lodash/isArray';
 import reduce from 'lodash/reduce';
@@ -55,7 +55,7 @@ export const toQueryString = (params) =>
  * @param {Object}  options
  * @return {Object} headers
  */
-async function getRequestHeaders(options = {}) {
+async function getRequestHeaders(options: RequestOptionTypes) {
   // Define default headers
   const headers = {
     'Content-Type': 'application/json',
@@ -75,13 +75,26 @@ async function getRequestHeaders(options = {}) {
  * @param {Object} options.headers  The headers to send with the request.
  * @param {Object} options.body     The body to send with the request.
  */
-async function makeRequest(url, options = {}) {
+
+type RequestOptionTypes = {
+  method?: Method;
+  headers?: AxiosRequestHeaders | RawAxiosRequestHeaders;
+  body?: any;
+  cancelToken?: any;
+  formData?: boolean;
+
+}
+
+async function makeRequest(url: string, options: RequestOptionTypes): Promise<AxiosResponse> {
   let response;
   const requestHeaders = await getRequestHeaders(options);
   const requestOptions = {
     url,
     method: options.method || 'GET',
-    headers: requestHeaders,
+    headers: Object.entries(requestHeaders).reduce((headers, [key, value]) => {
+      headers[key] = value.toString();
+      return headers;
+    }, {}),
     data: options.body,
     cancelToken: options.cancelToken,
   };
@@ -122,7 +135,7 @@ async function makeRequest(url, options = {}) {
  * @param {Object} options.headers  The headers to send with the request.
  * @param {Object} options.body     The body to send with the request.
  */
-export async function apiRequest(url, options = {}) {
+export async function apiRequest(url:string, options: RequestOptionTypes) {
   try {
     // Make request with current tokens.
     const response = await makeRequest(url, options);

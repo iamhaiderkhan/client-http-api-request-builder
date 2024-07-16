@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import RestEntityAPI from './restEntityApi';
-
+import { AxiosRequestHeaders, RawAxiosRequestHeaders, Method } from 'axios';
 const METHOD_TYPES = {
   POST: 'POST',
   PUT: 'PUT',
@@ -25,7 +25,24 @@ const API_METHODS = {
  * @param {Object} options.endpoints
  * @param {Object} options.entities
  */
-const ApiBuilder = (options) => {
+
+type ApiBuilderOptions = {
+  name?: string;
+  endpoint?: Function;
+  endpoints?: {
+    [key: string]: {
+      endpoint: Function;
+      type:  'list' | 'create' | 'update' | 'destroy' | 'getById' | string
+    }
+  };
+  entities?: {
+    [key: string]: {
+      name: string;
+      endpoint: Function;
+  } };
+  headers?: AxiosRequestHeaders | RawAxiosRequestHeaders;
+}
+const ApiBuilder = (options:ApiBuilderOptions): Object => {
   // Destructure the options object to get entities, endpoints, name, endpoint and headers
   const {
     entities, endpoints, name, endpoint, headers,
@@ -44,7 +61,7 @@ const ApiBuilder = (options) => {
         // Destructure the property to get endpoint, type, and selection
         const { endpoint, type, selection } = properties[methodName];
         // Create a new RestEntityAPI instance
-        const api = RestEntityAPI({ methodName, endpoint, selection, headers: headerOptions });
+        const api = RestEntityAPI({ name:methodName, endpoint, selection, headers: headerOptions });
         // If isEntity is true, add the entire api instance to methods, otherwise add the specific API method
         methods[methodName] = isEntity ? api : api[API_METHODS[type]];
         // Return the updated methods object
