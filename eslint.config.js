@@ -42,7 +42,7 @@ export default [
       "max-len": [
         "error",
         {
-          "code": 160
+          "code": 165
         }
       ],
       "no-shadow": 0,
@@ -70,7 +70,7 @@ export default [
       "prefer-regex-literals": 0,
       "default-param-last": 0
     },
-    ignores: ['node_modules/*']
+    ignores: ['node_modules/*','dist/*']
   }
 
 ];
