@@ -7,12 +7,40 @@ type RestEntityAPIOptions = {
   headers: AxiosRequestHeaders | RawAxiosRequestHeaders;
 }
 
+interface CreateTypes {
+  data?: any;
+  params?: any;
+  cancelToken?: any;
+  query?: any;
+}
+interface UpdateTypes {
+  id?: any;
+  data?: any;
+  params?: any;
+}
+interface DestroyTypes {
+  id?: any;
+  params?: any;
+}
+interface GetByIdTypes {
+  id?: any;
+  params?: any;
+  query?: any;
+  cancelToken?: any;
+}
+interface ListTypes {
+  query?: any;
+  params?: any;
+  cancelToken?: any;
+}
+
+
 export type RestEntityAPIReturnTypes  = {
-  create: Function;
-  update: Function;
-  destroy: Function;
-  getById: Function;
-  list: Function;
+  create: (data?: CreateTypes['data'], params?: CreateTypes['params'], cancelToken?: CreateTypes['cancelToken'], query?: CreateTypes['query']) => Promise<any>;
+  update: (id?: UpdateTypes['id'], data?: UpdateTypes['data'], params?: UpdateTypes['params']) => Promise<any>;
+  destroy: (id?: DestroyTypes['id'], params?: DestroyTypes['params']) => Promise<any>;
+  getById: (id?: GetByIdTypes['id'], params?: GetByIdTypes['params'], query?: GetByIdTypes['query'], cancelToken?: GetByIdTypes['cancelToken']) => Promise<any>;
+  list:  (query?: ListTypes['query'], params?: ListTypes['params'], cancelToken?: ListTypes['cancelToken']) => Promise<any>;
   buildEndpoint: Function;
   toQueryString: Function;
 } & {}

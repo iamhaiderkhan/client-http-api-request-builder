@@ -43,13 +43,16 @@ interface ApiBuilderOptions {
   } };
   headers?: AxiosRequestHeaders | RawAxiosRequestHeaders;
 }
-// add return type for ApiBuilder
 
+type UnionToIntersection<U> =
+  (U extends any ? (k: U) => void : never) extends ((k: infer I) => void)
+    ? I
+    : never;
 
 interface DefaultEntityAPIReturnTypes extends RestEntityAPIReturnTypes{ }
 
  interface EndpointsAPIReturnTypes {
-  [key: string]: Function;
+  [key: string]: UnionToIntersection<RestEntityAPIReturnTypes[keyof RestEntityAPIReturnTypes]>;
 }
  interface EntityAPIReturnTypes {
   [key: string]: RestEntityAPIReturnTypes;
@@ -76,6 +79,7 @@ const ApiBuilder = (options: ApiBuilderOptions)  =>  {
         // Create a new RestEntityAPI instance
         const api = RestEntityAPI({ name:methodName, endpoint, selection, headers: headerOptions });
         // If isEntity is true, add the entire api instance to methods, otherwise add the specific API method
+
         methods[methodName] = isEntity ? api : api[API_METHODS[type]];
         // Return the updated methods object
         return methods;
@@ -99,6 +103,7 @@ const ApiBuilder = (options: ApiBuilderOptions)  =>  {
     // Return an object with apiEntities and apiEndpoints
     return merge({}, { ...apiEndpoints }, { ...apiEntities });
   };
+
   // Call getApiEndpoints function to get the API endpoints
   return { ...getApiEndpoints(endpoints)} as DefaultEntityAPIReturnTypes & EndpointsAPIReturnTypes & EntityAPIReturnTypes;
 };
