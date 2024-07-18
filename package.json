@@ -1,6 +1,6 @@
 {
   "name": "client-http-api-request-builder",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A client for manage api request for frontend applications",
   "type": "module",
   "main": "./dist/index.js",

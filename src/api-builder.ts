@@ -1,6 +1,7 @@
 import merge from 'lodash/merge';
-import RestEntityAPI from './restEntityApi';
-import { AxiosRequestHeaders, RawAxiosRequestHeaders, Method } from 'axios';
+import RestEntityAPI,{RestEntityAPIReturnTypes} from './restEntityApi';
+import { AxiosRequestHeaders, RawAxiosRequestHeaders } from 'axios';
+
 const METHOD_TYPES = {
   POST: 'POST',
   PUT: 'PUT',
@@ -26,29 +27,41 @@ const API_METHODS = {
  * @param {Object} options.entities
  */
 
-type ApiBuilderOptions = {
+interface ApiBuilderOptions {
   name?: string;
-  endpoint?: Function;
+  endpoint?: () => string;
   endpoints?: {
-    [key: string]: {
-      endpoint: Function;
+    [x: string]: {
+      endpoint: ()=> string;
       type:  'list' | 'create' | 'update' | 'destroy' | 'getById' | string
     }
   };
   entities?: {
     [key: string]: {
       name: string;
-      endpoint: Function;
+      endpoint: ()=> string;
   } };
   headers?: AxiosRequestHeaders | RawAxiosRequestHeaders;
 }
-const ApiBuilder = (options:ApiBuilderOptions): Object => {
+// add return type for ApiBuilder
+
+
+interface DefaultEntityAPIReturnTypes extends RestEntityAPIReturnTypes{ }
+
+ interface EndpointsAPIReturnTypes {
+  [key: string]: Function;
+}
+ interface EntityAPIReturnTypes {
+  [key: string]: RestEntityAPIReturnTypes;
+}
+
+const ApiBuilder = (options: ApiBuilderOptions)  =>  {
   // Destructure the options object to get entities, endpoints, name, endpoint and headers
   const {
     entities, endpoints, name, endpoint, headers,
   } = options;
   // Define a function to get API endpoints
-  const getApiEndpoints = (endpoints) => {
+  const getApiEndpoints = (endpoints) =>  {
     // Initialize an empty object for API endpoints
     let apiEndpoints = {};
     // Initialize an empty object for API entities
@@ -87,8 +100,8 @@ const ApiBuilder = (options:ApiBuilderOptions): Object => {
     return merge({}, { ...apiEndpoints }, { ...apiEntities });
   };
   // Call getApiEndpoints function to get the API endpoints
-  return { ...getApiEndpoints(endpoints) };
+  return { ...getApiEndpoints(endpoints)} as DefaultEntityAPIReturnTypes & EndpointsAPIReturnTypes & EntityAPIReturnTypes;
 };
 
-export { METHOD_TYPES };
+export { METHOD_TYPES, DefaultEntityAPIReturnTypes, EndpointsAPIReturnTypes, EntityAPIReturnTypes };
 export default ApiBuilder;
